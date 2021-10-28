@@ -32,7 +32,6 @@ public class Topic_03_Xpath_Css_Part_II {
 		driver.findElement(By.id("pass")).sendKeys("");
 		driver.findElement(By.cssSelector(".registered-users button[name='send']")).click();
 		
-		//verify
 		Assert.assertEquals(driver.findElement(By.id("advice-required-entry-email")).getText(), "This is a required field.");
 		Assert.assertEquals(driver.findElement(By.id("advice-required-entry-pass")).getText(), "This is a required field.");
 	}
