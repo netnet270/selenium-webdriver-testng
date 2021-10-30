@@ -95,6 +95,59 @@ public class Topic_06_Web_Element_Command_II {
 		Assert.assertFalse(isSelected(javaCheckboxBy));
 	}
 	
+	@Test
+	public void TC_04_Register_Function_At_MailChimp() {
+		driver.get("https://login.mailchimp.com/signup/");
+		
+		driver.findElement(By.id("email")).sendKeys("automation@gmail.com");
+		driver.findElement(By.id("new_username")).sendKeys("automation");
+		
+		By passwordTextbox = By.id("new_password");
+		By signupButton = By.id("create-account");
+		
+		// lowercase
+		driver.findElement(passwordTextbox).sendKeys("auto");
+		Assert.assertTrue(driver.findElement(By.xpath("//li[@class='lowercase-char completed' and text()='One lowercase character']")).isDisplayed());
+		Assert.assertFalse(driver.findElement(signupButton).isEnabled());
+
+		// uppercase
+		driver.findElement(passwordTextbox).clear();
+		driver.findElement(passwordTextbox).sendKeys("AUTO");
+		Assert.assertTrue(driver.findElement(By.xpath("//li[@class='uppercase-char completed' and text()='One uppercase character']")).isDisplayed());
+		Assert.assertFalse(driver.findElement(signupButton).isEnabled());
+
+		// number
+		driver.findElement(passwordTextbox).clear();
+		driver.findElement(passwordTextbox).sendKeys("123");
+		Assert.assertTrue(driver.findElement(By.xpath("//li[@class='number-char completed' and text()='One number']")).isDisplayed());
+		Assert.assertFalse(driver.findElement(signupButton).isEnabled());
+
+		// special
+		driver.findElement(passwordTextbox).clear();
+		driver.findElement(passwordTextbox).sendKeys("###");
+		Assert.assertTrue(driver.findElement(By.xpath("//li[@class='special-char completed' and text()='One special character']")).isDisplayed());
+		Assert.assertFalse(driver.findElement(signupButton).isEnabled());
+
+		// 8 characters minimum
+		driver.findElement(passwordTextbox).clear();
+		driver.findElement(passwordTextbox).sendKeys("abcdefjg");
+		Assert.assertTrue(driver.findElement(By.xpath("//li[@class='8-char completed' and text()='8 characters minimum']")).isDisplayed());
+		Assert.assertFalse(driver.findElement(signupButton).isEnabled());
+		
+		// all
+		driver.findElement(passwordTextbox).clear();
+		driver.findElement(passwordTextbox).sendKeys("Auto1234!!!");
+		Assert.assertFalse(driver.findElement(By.xpath("//li[@class='lowercase-char completed' and text()='One lowercase character']")).isDisplayed());
+		Assert.assertFalse(driver.findElement(By.xpath("//li[@class='uppercase-char completed' and text()='One uppercase character']")).isDisplayed());
+		Assert.assertFalse(driver.findElement(By.xpath("//li[@class='number-char completed' and text()='One number']")).isDisplayed());
+		Assert.assertFalse(driver.findElement(By.xpath("//li[@class='special-char completed' and text()='One special character']")).isDisplayed());
+		Assert.assertFalse(driver.findElement(By.xpath("//li[@class='8-char completed' and text()='8 characters minimum']")).isDisplayed());
+		Assert.assertTrue(driver.findElement(signupButton).isEnabled());
+		
+		driver.findElement(By.id("marketing_newsletter")).click();
+		Assert.assertTrue(driver.findElement(By.id("marketing_newsletter")).isSelected());
+	}
+	
 	public boolean isDisplayed(By by) {
 		WebElement element = driver.findElement(by);
 		
