@@ -50,7 +50,7 @@ public class Topic_00_Template {
 		driver.quit();
 	}
 	
-	public void slepInSecond(long second) {
+	public void sleepInSecond(long second) {
 		try {
 			Thread.sleep(second * 1000);
 		} catch (InterruptedException e) {
